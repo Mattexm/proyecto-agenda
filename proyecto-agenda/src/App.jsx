@@ -4,6 +4,10 @@ const App = () => {
   const [persons, setPersons] = useState([{ name: "Arto Hellas", id: 1 }]);
   const [newName, setNewName] = useState("");
 
+  const personExists = (name) => {
+    return persons.some((person) => person.name === name);
+  };
+
   const addName = (e) => {
     e.preventDefault();
     const personObject = {
@@ -11,8 +15,12 @@ const App = () => {
       name: newName,
     };
 
-    setPersons(persons.concat(personObject));
-    setNewName("");
+    if (personExists(personObject.name)) {
+      alert(`${newName} is already on the phonebook`);
+    } else {
+      setPersons(persons.concat(personObject));
+      setNewName("");
+    }
   };
 
   const handlePersonChange = (e) => {
